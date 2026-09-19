@@ -19,7 +19,7 @@ const handler = async (m, { conn, args, text, command, usedPrefix }) => {
     };
 
     if (checkLimit()) {
-        return m.reply(global.mess?.limit || 'Limit Anda habis!');
+        return m.reply(global.mess?.limit || 'Limit Anda habis!!');
     }
 
     const q = m.quoted ? m.quoted : m;
