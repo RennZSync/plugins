@@ -1,2 +1,2 @@
-# plugins-
+# plugins
 kumpulan plugin esm dll
