@@ -65,7 +65,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
             primitives: [
                 { __typename: "GenAISpacerPrimitive" },
                 {
-                    text: "# {{social_entity_1}}See results\0{{/social_entity_1}}",
+                    text: "# {{social_entity_1}}See results{{/social_entity_1}}",
                     inline_entities: [
                         {
                             key: "social_entity_1",
