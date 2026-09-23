@@ -40,7 +40,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
 
     const rennzsync = new AIRich(conn);
     rennzsync.addCompact({
-        title: "RennZSync ig stlak",
+        title: "RennZSync ig stalk",
         subtitle: "RennZSync",
         secondary_subtitle: "",
         image: profile.profilePic,
