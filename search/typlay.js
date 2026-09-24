@@ -954,6 +954,7 @@ let handler = async (m, ctx) => {
 handler.help = ['ytplay', 'ytp'];
 handler.tags = ['search'];
 handler.command = /^(ytplay|ytp)$/i;
-handler.owner = false;
+handler.limit = true;
+handler.register = true;
 
 export default handler;
