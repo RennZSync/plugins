@@ -1,2 +1,3 @@
 # plugins
-kumpulan plugin esm dll
+
+kumpulan plugin esm scrace dan kebutuhan bot kalian dll
