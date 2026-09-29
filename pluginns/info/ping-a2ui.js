@@ -1,3 +1,8 @@
+/* 
+plugin by hilman
+developer ryo yamada 
+*/
+
 import os from 'os'
 import fs from 'fs'
 import { execSync } from 'child_process'
