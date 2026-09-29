@@ -18,7 +18,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
 
     let profile = {
         fullName: cleanUsername,
-        profilePic: "https://raw.githubusercontent.com/himanackerman/Image/main/anu/1790145577832-138337d7.jpg",
+        profilePic: "https://raw.githubusercontent.com/RennZSync/uploaders/main/anu/1790671992786-6e96da1f.jpg",
         isVerified: true
     };
 
