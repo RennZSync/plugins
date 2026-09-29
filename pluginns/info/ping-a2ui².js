@@ -38,7 +38,6 @@ function getUsername() {
   }
 }
 
-// Info disk (Linux/VPS), null kalau gak tersedia (Windows dsb)
 function getDisk() {
   try {
     const out = execSync('df -kP /', {
