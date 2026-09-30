@@ -88,7 +88,7 @@ let handler = async (m, { text, conn }) => {
     AIRich.newLayout('Single', {
       __typename: 'GenAIaeacdsnwHtmlPrimitive',
       payload: buildHtml(message, seconds),
-      trusted_sources: ['apdev.dev'],
+      trusted_sources: ['rennz.dev'],
     }),
     { messageType: 2, messageText: '🔔 Reminder' }
   );
