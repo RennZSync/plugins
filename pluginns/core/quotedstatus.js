@@ -4,7 +4,7 @@ handler.before = async (m, { conn }) => {
     const fs = await import('fs')
     const BOT_JID = conn.user.id.split(':')[0] + '@s.whatsapp.net'
     const BOT_NUMBER = BOT_JID.split('@')[0]
-    const fallback = './media/avatar_contact.png'
+    const fallback = '../../media/avatar_contact.png'
 
     if (!conn.__quotedThumbCache) conn.__quotedThumbCache = null
 
