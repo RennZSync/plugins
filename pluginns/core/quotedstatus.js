@@ -34,8 +34,8 @@ handler.before = async (m, { conn }) => {
                     displayName: `@${pushName || 'User'}`,
                     vcard: `BEGIN:VCARD
 VERSION:3.0
-N:${global.author || 'Bot'}
-FN:${global.author || 'Bot'}
+N:${global.author || '𝐋𝐘𝐍𝐍𝐀 𝐀𝐈'}
+FN:${global.author || 'RennZSync'}
 ORG:WhatsApp Bot;
 TEL;type=CELL;type=VOICE;waid=${BOT_NUMBER}:${BOT_NUMBER}
 END:VCARD`,
