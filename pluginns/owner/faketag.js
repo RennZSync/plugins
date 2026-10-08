@@ -1,7 +1,7 @@
-/* plugins/owner/faketag.js
-
+/* 
+plugins/owner/faketag.js
 Multi fake-tag: tiap tag = groupJid RANDOM unik + groupSubject
-Versi ESM gaya bot lama (handler/conn/m)
+by 𝐑𝐞𝐧𝐧𝐙𝐒𝐲𝐧𝐜 
 
 Format:
 .faketag @A|@B|@C
