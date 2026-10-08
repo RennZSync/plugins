@@ -6,8 +6,8 @@ Format:
 .faketag @A|@B|@C
 .faketag join ada @A|@B| teks
 .faketag @Mark Zuckerberg
-@Elon Musk
-@Messi
+@ Elon Musk
+@ Messi
 .faketag Mark Zuckerberg | halo
 */
 
@@ -36,7 +36,7 @@ function cleanName(n) {
 
 /**
  * Multi via | :
- *   "join ada @A|@B| teks" → prefix, tags, suffix
+ *   "join ada @ A|@ B| teks" → prefix, tags, suffix
  */
 function parsePipe(input) {
   if (!input.includes('|')) return null
@@ -68,12 +68,12 @@ function parsePipe(input) {
 
 /**
  * Multi via newline / banyak @ di baris:
- *   @Mark Zuckerberg
- *   @Elon Musk
+ *   @ Mark Zuckerberg
+ *   @ Elon Musk
  * atau:
  *   halo
- *   @A
- *   @B
+ *   @ A
+ *   @ B
  *   jir
  */
 function parseLines(input) {
