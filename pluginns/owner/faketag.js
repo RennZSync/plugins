@@ -1,4 +1,5 @@
 /* plugins/owner/faketag.js
+
 Multi fake-tag: tiap tag = groupJid RANDOM unik + groupSubject
 Versi ESM gaya bot lama (handler/conn/m)
 
@@ -9,6 +10,8 @@ Format:
 @ Elon Musk
 @ Messi
 .faketag Mark Zuckerberg | halo
+
+Enter (newline) dari pesan asli ikut dipertahankan.
 */
 
 const MAX_TAGS = 1000000
@@ -36,7 +39,8 @@ function cleanName(n) {
 
 /**
  * Multi via | :
- *   "join ada @ A|@ B| teks" → prefix, tags, suffix
+ * "join ada @ A|@ B| teks" → prefix, tags, suffix
+ * Kalau input ada enter, hasil juga pakai enter.
  */
 function parsePipe(input) {
   if (!input.includes('|')) return null
@@ -62,19 +66,20 @@ function parsePipe(input) {
     if (i === 0 && before) prefix = before
     tags.push(name)
   }
+
   if (!tags.length) return null
-  return { prefix, tags, suffix, sep: ' ' }
+  return { prefix, tags, suffix, sep: input.includes('\n') ? '\n' : ' ' }
 }
 
 /**
  * Multi via newline / banyak @ di baris:
- *   @ Mark Zuckerberg
- *   @ Elon Musk
+ * @ Mark Zuckerberg
+ * @ Elon Musk
  * atau:
- *   halo
- *   @ A
- *   @ B
- *   jir
+ * halo
+ * @ A
+ * @ B
+ * jir
  */
 function parseLines(input) {
   const lines = String(input).split(/\r?\n/)
@@ -151,13 +156,16 @@ function buildText(prefix, mentions, suffix, sep) {
   let out = ''
   const p = String(prefix || '')
   const s = String(suffix || '')
+
   if (p) {
     out = p
     if (sep === '\n') {
       if (!out.endsWith('\n')) out += '\n'
     } else if (!/[\s\n]$/.test(out)) out += ' '
   }
+
   out += mentionText
+
   if (s) {
     if (sep === '\n') {
       if (!out.endsWith('\n')) out += '\n'
@@ -167,12 +175,17 @@ function buildText(prefix, mentions, suffix, sep) {
       out += s
     }
   }
+
   return tidy(out)
 }
 
-let handler = async (m, { conn, args, usedPrefix, command }) => {
+let handler = async (m, { conn, text, usedPrefix, command }) => {
   const { generateWAMessageFromContent } = await import('baileys')
-  const input = String(args.join(' ') || '').trim()
+
+  // pakai teks mentah supaya enter tidak hilang (args sudah kepecah per spasi/enter)
+  const raw = typeof text === 'string' && text.length ? text : String(m.text || '').replace(/^\S+\s*/, '')
+  const input = String(raw).trim()
+
   if (!input) {
     return conn.sendMessage(
       m.chat,
@@ -212,6 +225,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
   }
 
   await m.react('🕕').catch(() => {})
+
   try {
     const msg = generateWAMessageFromContent(
       m.chat,
@@ -230,6 +244,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
       },
       { userJid: conn.user.id }
     )
+
     await conn.relayMessage(m.chat, msg.message, { messageId: msg.key.id })
     await m.react('✅').catch(() => {})
   } catch (e) {
