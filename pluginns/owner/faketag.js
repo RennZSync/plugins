@@ -33,15 +33,10 @@ function tidy(s) {
 function cleanName(n) {
   return String(n || '')
     .replace(/^@+/, '')
-    .replace(/[\u200e\u200f\u202a-\u202e\u2066-\u2069]/g, '') // bidi marks
+    .replace(/[\u200e\u200f\u202a-\u202e\u2066-\u2069]/g, '')
     .trim()
 }
 
-/**
- * Multi via | :
- * "join ada @ A|@ B| teks" → prefix, tags, suffix
- * Kalau input ada enter, hasil juga pakai enter.
- */
 function parsePipe(input) {
   if (!input.includes('|')) return null
   const parts = input.split('|').map((s) => s.trim())
@@ -71,16 +66,6 @@ function parsePipe(input) {
   return { prefix, tags, suffix, sep: input.includes('\n') ? '\n' : ' ' }
 }
 
-/**
- * Multi via newline / banyak @ di baris:
- * @ Mark Zuckerberg
- * @ Elon Musk
- * atau:
- * halo
- * @ A
- * @ B
- * jir
- */
 function parseLines(input) {
   const lines = String(input).split(/\r?\n/)
   const tags = []
@@ -118,7 +103,6 @@ function parseLines(input) {
   }
 }
 
-/** Satu tag legacy: "Nama" atau "Nama | pesan" */
 function parseLegacy(input) {
   const atLines = input.split(/\r?\n/).filter((l) => l.trim().startsWith('@'))
   if (atLines.length >= 2) return null
@@ -182,7 +166,6 @@ function buildText(prefix, mentions, suffix, sep) {
 let handler = async (m, { conn, text, usedPrefix, command }) => {
   const { generateWAMessageFromContent } = await import('baileys')
 
-  // pakai teks mentah supaya enter tidak hilang (args sudah kepecah per spasi/enter)
   const raw = typeof text === 'string' && text.length ? text : String(m.text || '').replace(/^\S+\s*/, '')
   const input = String(raw).trim()
 
