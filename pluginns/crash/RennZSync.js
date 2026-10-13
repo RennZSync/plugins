@@ -1,3 +1,9 @@
+/* 
+by 𝐑𝐞𝐧𝐧𝐙𝐒𝐲𝐧𝐜
+𝐋𝐘𝐍𝐍𝐀 𝐀𝐈 
+ch: https://whatsapp.com/channel/0029VbCJ0B0K0IBlYlYJ0W3c
+dont delete this watermark 
+*/
 import * as baileys from 'baileys';
 
 const protobuf = global.proto?.proto || global.proto || baileys.proto || baileys.default?.proto;;
