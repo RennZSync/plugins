@@ -1,6 +1,6 @@
-import {
-  AIRich
-} from '../../lib/ui/MessageBuilder.js'
+// sepertiya ini sudah tidak worsk untuk rich fc nya
+
+import { AIRich } from '../../lib/ui/MessageBuilder.js'
 
 function parseDuration(input) {
   if (!input) return 60000 // 1 menit default
