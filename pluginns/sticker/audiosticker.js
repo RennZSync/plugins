@@ -1,23 +1,14 @@
 import crypto from 'crypto'
 import https from 'https'
-import {
-  spawn
-} from 'child_process'
+import { spawn } from 'child_process'
 import JSZip from 'jszip'
 import ffmpeg from 'fluent-ffmpeg'
-import {
-  promises as fsp
-} from 'fs'
+import { promises as fsp } from 'fs'
 import os from 'os'
 import path from 'path'
-import {
-  proto,
-  downloadContentFromMessage
-} from 'baileys'
+import { proto, downloadContentFromMessage } from 'baileys'
 import store from '../../lib/store/store.js'
-import {
-  writeExif
-} from '../../lib/core/exif.js'
+import { writeExif } from '../../lib/core/exif.js'
 
 const MAX_STICKER_BYTES = 1024 * 1024
 const STICKER_VIDEO_MAX_SECONDS = 10
@@ -30,6 +21,7 @@ const AUTO_CROP_MIN_RATIO = 0.75
 const AUTO_CROP_MAX_RATIO = 1.34
 const MIN_BORDER_RATIO = 0.04
 const MIN_CONTENT_AREA = 0.3
+
 function toBuffer(value) {
   if (Buffer.isBuffer(value)) return value
   if (value && value.type === 'Buffer' && Array.isArray(value.data)) return Buffer.from(value.data)
@@ -590,19 +582,17 @@ function encodeAnimatedWebp(inputPath, outputPath, {
 }) {
   const trim = crop ? [`crop=${crop.w}:${crop.h}:${crop.x}:${crop.y}`] : []
 
-  const filters = mode === 'crop' ?
-    [
-      ...trim,
-      'fps=15',
-      'crop=min(iw\\,ih):min(iw\\,ih)',
-      `scale=${width}:${width}:flags=lanczos`,
-    ] :
-    [
-      ...trim,
-      'fps=15',
-      `scale=${width}:${width}:force_original_aspect_ratio=decrease:flags=lanczos`,
-      `pad=${width}:${width}:(ow-iw)/2:(oh-ih)/2:color=black@0.0`,
-    ]
+  const filters = mode === 'crop' ? [
+    ...trim,
+    'fps=15',
+    'crop=min(iw\\,ih):min(iw\\,ih)',
+    `scale=${width}:${width}:flags=lanczos`,
+  ] : [
+    ...trim,
+    'fps=15',
+    `scale=${width}:${width}:force_original_aspect_ratio=decrease:flags=lanczos`,
+    `pad=${width}:${width}:(ow-iw)/2:(oh-ih)/2:color=black@0.0`,
+  ]
 
   const outputOptions = ['-loop', '0', '-preset', 'default', '-an', '-vsync', '0', '-vcodec', 'libwebp']
   if (mode !== 'crop') outputOptions.push('-pix_fmt', 'yuva420p')
@@ -677,20 +667,18 @@ async function imageToStickerWebp(buffer, mode) {
   const sharpMod = await import('sharp').catch(() => null)
   if (!sharpMod?.default) throw new Error('Install sharp dulu:\nnpm i sharp')
 
-  const resizeOptions = mode === 'crop' ?
-    {
-      fit: 'cover',
-      position: 'centre'
-    } :
-    {
-      fit: 'contain',
-      background: {
-        r: 0,
-        g: 0,
-        b: 0,
-        alpha: 0
-      }
+  const resizeOptions = mode === 'crop' ? {
+    fit: 'cover',
+    position: 'centre'
+  } : {
+    fit: 'contain',
+    background: {
+      r: 0,
+      g: 0,
+      b: 0,
+      alpha: 0
     }
+  }
 
   let width = BASE_WIDTH
   let result
@@ -826,8 +814,8 @@ function detectMedia(q) {
 
 const AUDIO_STICKER_CMD = /^(audiosticker|stickeraudio|stikeraudio|stikaudio)$/i
 const AUDIO_STICKER_BODY_CMD = /^\S?(audiosticker|stickeraudio|stikeraudio|stikaudio)\b/i
-const AUDIO_STICKER_IMAGE = './media/menu.jpg'
-const AUDIO_SESSION_SECONDS = 60
+const AUDIO_STICKER_IMAGE = './media/audiostc.jpg'
+const AUDIO_SESSION_SECONDS = 99
 const MEDIA_KEY_DOMAIN_E2EE = 1
 const AUDIO_STICKER_EXPERIENCE_ID = 13001
 
@@ -1025,8 +1013,7 @@ const audioReact = (conn, m, emoji) =>
 async function prepareAudio(raw, fallbackSeconds = 0) {
   const input = Buffer.from(raw)
 
-  const opus = input.subarray(0, 4).toString('ascii') === 'OggS' ?
-    {
+  const opus = input.subarray(0, 4).toString('ascii') === 'OggS' ? {
       buf: input,
       mimetype: 'audio/ogg; codecs=opus'
     } :
